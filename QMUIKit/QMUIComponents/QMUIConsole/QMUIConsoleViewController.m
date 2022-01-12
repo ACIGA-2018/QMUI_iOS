@@ -346,6 +346,11 @@
     QMUIConsoleLogItem *logItem = [QMUIConsoleLogItem logItemWithLevel:level name:name timeString:[self.dateFormatter stringFromDate:[NSDate new]] logString:logString];
     [self searchInLogItem:logItem];
     [self.logItems addObject:logItem];
+    if (self.maxLogCount >= 2) {
+        if (self.logItems.count > self.maxLogCount) {
+            [self.logItems removeObjectsInRange:NSMakeRange(0, self.maxLogCount / 2)];
+        }
+    }
     dispatch_async(dispatch_get_main_queue(), ^{// 避免频繁打 log 时卡顿
         [self printLog];
     });

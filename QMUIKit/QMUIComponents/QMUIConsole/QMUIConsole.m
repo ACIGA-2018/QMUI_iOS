@@ -23,6 +23,7 @@
 
 @interface QMUIConsole ()
 @property(nonatomic, assign) CGFloat showHeight;
+@property(nonatomic, assign) NSUInteger maxLogCount;
 @property(nonatomic, strong) UIWindow *consoleWindow;
 @property(nonatomic, strong) QMUIConsoleViewController *consoleViewController;
 @end
@@ -59,6 +60,11 @@
     self.showHeight = height;
 }
 
+- (void)setMaxLogCount:(NSUInteger)maxLogCount {
+    _maxLogCount = maxLogCount;
+    self.consoleViewController.maxLogCount = self.maxLogCount;
+}
+
 - (void)setShowHeight:(CGFloat)showHeight {
     _showHeight = showHeight;
     self.consoleViewController.showHeight = self.showHeight;
@@ -73,6 +79,9 @@
 }
 
 + (void)logWithLevel:(NSString *)level name:(NSString *)name logString:(id)logString {
+    if ([QMUIConsole sharedInstance].canShow == NO) {
+        return;
+    }
     QMUIConsole *console = [QMUIConsole sharedInstance];
     [console initConsoleWindowIfNeeded];
     [console.consoleViewController logWithLevel:level name:name logString:logString];
@@ -132,6 +141,7 @@
         
         self.consoleViewController = [[QMUIConsoleViewController alloc] init];
         self.consoleViewController.showHeight = self.showHeight;
+        self.consoleViewController.maxLogCount = self.maxLogCount;
         self.consoleWindow.rootViewController = self.consoleViewController;
     }
 }

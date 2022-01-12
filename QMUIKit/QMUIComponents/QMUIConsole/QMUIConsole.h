@@ -35,7 +35,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nonnull instancetype)sharedInstance;
 
+/// 设置日志显示高度
 - (void)showConsolrHeight:(CGFloat)height;
+
+/// 显示日志最大条数（可设置范围2~Max, <=1时不限制）
+- (void)setMaxLogCount:(NSUInteger)maxLogCount;
 
 /**
  打印日志到控制台

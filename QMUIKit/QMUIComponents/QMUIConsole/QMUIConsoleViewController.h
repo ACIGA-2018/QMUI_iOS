@@ -33,6 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, assign) CGFloat showHeight;
 
+@property(nonatomic, assign) NSUInteger maxLogCount;
+
 - (void)logWithLevel:(nullable NSString *)level name:(nullable NSString *)name logString:(id)logString;
 - (void)log:(id)logString;
 - (void)clear;
